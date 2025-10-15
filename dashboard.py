@@ -12,7 +12,7 @@ def show_dashboard():
 
     st.markdown("""
     This platform provides insights and management tools for **Nairobi Matatu Routes**.  
-    Use the sidebar to view, add, or analyze routes with detailed **Fare Ranges**, **Durations**, and **Distances**.
+    Use the navigation to view, add, or analyze routes with detailed **Fare Ranges**, **Durations**, and **Distances**.
     """)
 
     st.divider()
@@ -22,6 +22,7 @@ def show_dashboard():
     # Get statistics
     routes_df = get_all_routes()
     observations_df = get_all_observations()
+    observations_df["observation_time"] = observations_df["observation_time"].apply(lambda x: str(x).split()[-1])
     
     with col1:
         st.metric("Total Routes", len(routes_df))
@@ -47,6 +48,6 @@ def show_dashboard():
     # Recent observations
     st.subheader("Recent Observations")
     if not observations_df.empty:
-        st.dataframe(observations_df.head(10), use_container_width=True)
+        st.dataframe(observations_df.head(), use_container_width=True)
     else:
         st.info("No observations recorded yet.")
