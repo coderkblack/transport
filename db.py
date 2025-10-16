@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from supabase import create_client, Client
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 # ✅ Initialize Supabase client
 url: str = st.secrets["supabase"]["url"]
@@ -78,10 +79,17 @@ def get_stops_for_route(route_id):
 
 def add_observation(route_id, obs_date, obs_time, passenger_count, fare_paid, traffic_condition, notes):
     try:
+        # COmbine date and time into a timezone-aware datetime
+        nairobi_tz = ZoneInfo("Africa/Nairobi")
+        local_dt = datetime.combine(obs_date, obs_time, tzinfo=nairobi_tz)
+
+        # Convert to UTC for storage
+        utc_dt = local_dt.astimezone(ZoneInfo("UTC"))
+
         data = {
             "route_id": route_id,
             "observation_date": str(obs_date),
-            "observation_time": str(obs_time),
+            "observation_time": utc_dt.isoformat(),
             "passenger_count": passenger_count,
             "fare_paid": fare_paid,
             "traffic_condition": traffic_condition,
