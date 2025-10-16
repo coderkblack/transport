@@ -8,3 +8,6 @@ seaborn==0.13.2
 matplotlib==3.10.1
 pydeck==0.9.1
 datetime
+psycopg2-binary
+supabase
+

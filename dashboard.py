@@ -3,7 +3,7 @@ import pandas as pd
 
 from db import get_all_routes
 from db import get_all_observations
-from db import create_connection
+from db import get_stops_for_route
 
 def show_dashboard():
     # st.header("Dashboard")
@@ -26,16 +26,16 @@ def show_dashboard():
     
     with col1:
         st.metric("Total Routes", len(routes_df))
-    
+
     with col2:
-        conn = create_connection()
-        if conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT COUNT(*) FROM stops")
-            stop_count = cursor.fetchone()[0]
-            cursor.close()
-            conn.close()
-            st.metric("Total Stops", stop_count)
+        # Get all stops across all routes
+        routes_df = get_all_routes()
+        stop_count = 0
+        for _, route in routes_df.iterrows():
+            stops = get_stops_for_route(route["route_id"])
+            stop_count += len(stops)
+        st.metric("Total Stops", stop_count)
+
     
     with col3:
         st.metric("Observations", len(observations_df))
