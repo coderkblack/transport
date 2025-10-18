@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from supabase import create_client, Client
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 # ✅ Initialize Supabase client
@@ -77,24 +77,27 @@ def get_stops_for_route(route_id):
 
 # --- OBSERVATIONS CRUD ---
 
-def add_observation(route_id, obs_date, obs_time, passenger_count, fare_paid, traffic_condition, notes):
+def add_observation(route_id, obs_date, passenger_count, fare_paid, traffic_condition, notes):
     try:
         # COmbine date and time into a timezone-aware datetime
         nairobi_tz = ZoneInfo("Africa/Nairobi")
-        local_dt = datetime.combine(obs_date, obs_time, tzinfo=nairobi_tz)
+        now_local = datetime.now(nairobi_tz)
 
         # Convert to UTC for storage
-        utc_dt = local_dt.astimezone(ZoneInfo("UTC"))
+        now_local_plus3 = now_local + timedelta(hours=3)
 
         data = {
             "route_id": route_id,
             "observation_date": str(obs_date),
-            "observation_time": utc_dt.isoformat(),
+            "observation_time": now_local_plus3.isoformat(),
             "passenger_count": passenger_count,
             "fare_paid": fare_paid,
             "traffic_condition": traffic_condition,
             "notes": notes
         }
+
+        # st.write(f"Recorded local time (+3h): {now_local_plus3}")
+
         supabase.table("observations").insert(data).execute()
         return True
     except Exception as e:
