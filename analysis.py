@@ -38,7 +38,6 @@ def analysis_page():
         st.plotly_chart(fig, use_container_width=True)
     
     elif analysis_type == "Route Comparison":
-        st.subheader("Route Comparison")
         routes = st.multiselect("Select routes to compare", 
                                observations_df['route_number'].unique())
         
