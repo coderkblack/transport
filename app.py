@@ -6,10 +6,7 @@ import mysql.connector
 
 # Import your page functions
 from dashboard import show_dashboard
-from add_route import add_route_page
-from add_stop import add_stops_page
 from analysis import analysis_page
-from data_collection import data_collection_page
 from view_routes import view_routes_page
 from traffic import traffic_page
 
@@ -49,10 +46,7 @@ st.set_page_config(
 
 # ---------- NAVIGATION BAR ----------
 tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
-    "Dashboard", 
-    "Add Route", 
-    "Add Stops", 
-    "Data Collection", 
+    "Dashboard",  
     "View Routes", 
     "Analysis",
     "Traffic"
@@ -63,19 +57,10 @@ with tab1:
     show_dashboard()
 
 with tab2:
-    add_route_page()
-
-with tab3:
-    add_stops_page()
-
-with tab4:
-    data_collection_page()
-
-with tab5:
     view_routes_page()
 
-with tab6:
+with tab3:
     analysis_page()
 
-with tab7:
+with tab4:
     traffic_page()
