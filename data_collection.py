@@ -1,8 +1,11 @@
 import streamlit as st
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from db import get_all_routes
 from db import add_observation
+
+now = datetime.now(ZoneInfo("Africa/Nairobi"))
 
 def data_collection_page():
     st.header("Record Observation")
@@ -23,8 +26,9 @@ def data_collection_page():
         col1, col2 = st.columns(2)
         
         with col1:
-            obs_date = st.date_input("Date*", value=datetime.now())
-            obs_time = st.time_input("Time*", value=datetime.now().time())
+            nairobi_now = datetime.now(ZoneInfo("Africa/Nairobi"))
+            obs_date = st.date_input("Date*", value=nairobi_now.date())
+            # obs_time = st.time_input("Time*", value=nairobi_now.now().time())
             passenger_count = st.number_input("Passenger Count", min_value=0, max_value=100, value=0)
         
         with col2:
@@ -37,7 +41,7 @@ def data_collection_page():
         submitted = st.form_submit_button("Record Observation")
         
         if submitted:
-            if add_observation(route_id, obs_date, obs_time, passenger_count, 
+            if add_observation(route_id, obs_date, passenger_count, 
                              fare_paid if fare_paid > 0 else None, 
                              traffic_condition, notes if notes else None):
                 st.success("Observation recorded successfully!")
