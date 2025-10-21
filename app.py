@@ -45,7 +45,7 @@ st.set_page_config(
 )
 
 # ---------- NAVIGATION BAR ----------
-tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+tab1, tab2, tab3, tab4 = st.tabs([
     "Dashboard",  
     "View Routes", 
     "Analysis",
