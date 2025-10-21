@@ -12,7 +12,7 @@ def show_dashboard():
 
     st.divider()
 
-    col1, col2, col3 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
 
     # --- Get data ---
     routes_df = get_all_routes()
