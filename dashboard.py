@@ -12,7 +12,7 @@ def show_dashboard():
 
     st.divider()
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(4)
 
     # --- Get data ---
     routes_df = get_all_routes()
@@ -34,17 +34,9 @@ def show_dashboard():
         st.metric("Total Routes", len(routes_df))
 
     with col2:
-        # Count all stops
-        stop_count = 0
-        for _, route in routes_df.iterrows():
-            stops = get_stops_for_route(route["route_id"])
-            stop_count += len(stops)
-        st.metric("Total Stops", stop_count)
-
-    with col3:
         st.metric("Observations", len(observations_df))
 
-    with col4:
+    with col3:
         if not observations_df.empty and "fare_paid" in observations_df.columns:
             avg_fare = observations_df["fare_paid"].mean()
             st.metric("Avg Fare", f"KSh {avg_fare:.2f}")
