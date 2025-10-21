@@ -13,12 +13,11 @@ def view_routes_page():
         st.info("No routes added yet.")
         return
     
-    st.dataframe(routes_df.head(), use_container_width=True)
 
     st.divider()
     
     # Route details
-    st.subheader("Route Details")
+    st.text("Route Details")
     route_options = {f"{row['route_number']} - {row['route_name']}": row['route_id'] 
                     for _, row in routes_df.iterrows()}
     
