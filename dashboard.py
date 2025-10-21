@@ -7,7 +7,7 @@ def show_dashboard():
 
     st.markdown("""
     This platform provides insights and management tools for **Nairobi Matatu Routes**.  
-    Use the navigation to view, add, or analyze routes with detailed **Fare Ranges**, **Durations**, and **Distances**.
+    Use the navigation to view, or analyze routes with detailed **Fare Ranges**, **Durations**, and **Distances**.
     """)
 
     st.divider()
